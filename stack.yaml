@@ -20,7 +20,7 @@ Resources:
   AllowSSH:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: allow-ssh
+      GroupName: !Sub allow-ssh-${Environment}
       GroupDescription: Allows SSH
       SecurityGroupIngress:
         - IpProtocol: tcp
