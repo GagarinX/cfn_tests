@@ -1,3 +1,4 @@
 template-file-path: stack.yaml
-parameters: {}
+parameters:
+  Environment: prod
 tags: {}
