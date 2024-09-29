@@ -50,6 +50,6 @@ Resources:
 Outputs:
   'Fn::ForEach::IPAddresses':
     - Identifier
-    - [1, 2]
+    - ["1", "2"]
     - 'IPAddress${Identifier}':
         Value: !GetAtt [!Sub 'SampleInstance${Identifier}', PublicIp]
