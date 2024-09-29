@@ -1,0 +1,14 @@
+Resources:
+  SampleInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: A4L
+      # ImageId: 
+      InstanceType: t2.micro
+      # SecurityGroupIds:
+      UserData: !Base64 |
+        #!/bin/bash -ex
+        # echo "It worked!" > /root/worked.txt
+      Tags:
+        - Key: Name
+          Value: SampleInstance
