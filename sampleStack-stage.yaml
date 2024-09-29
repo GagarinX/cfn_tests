@@ -1,0 +1,4 @@
+template-file-path: stack.yaml
+parameters:
+  Environment: stage
+tags: {}
