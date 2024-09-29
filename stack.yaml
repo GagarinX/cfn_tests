@@ -5,20 +5,6 @@ Parameters:
     Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
 
 Resources:
-  # SampleInstance:
-  #   Type: AWS::EC2::Instance
-  #   Properties:
-  #     KeyName: A4L
-  #     ImageId: !Ref ImageID
-  #     InstanceType: t2.micro
-  #     SecurityGroupIds:
-  #       - !Ref AllowSSH
-  #     UserData: !Base64 |
-  #       #!/bin/bash -ex
-  #       # echo "It worked!" > /root/worked.txt
-  #     Tags:
-  #       - Key: Name
-  #         Value: SampleInstance
   AllowSSH:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -30,17 +16,39 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 82.102.114.179/32
-  # SampleInstance2:
-  #   Type: AWS::EC2::Instance
-  #   Properties:
-  #     KeyName: A4L
-  #     ImageId: !Ref ImageID
-  #     InstanceType: t2.micro
-  #     SecurityGroupIds:
-  #       - !Ref AllowSSH
-  #     UserData: !Base64 |
-  #       #!/bin/bash -ex
-  #       echo "It worked!" > /root/worked.txt
-  #     Tags:
-  #       - Key: Name
-  #         Value: SampleInstance2
+  SampleInstance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: A4L
+      ImageId: !Ref ImageID
+      InstanceType: t2.micro
+      SecurityGroupIds:
+        - !Ref AllowSSH
+      UserData: !Base64 |
+        #!/bin/bash -ex
+        echo "It worked!" > /root/worked.txt
+      Tags:
+        - Key: Name
+          Value: SampleInstance
+  SampleInstance2:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: A4L
+      ImageId: !Ref ImageID
+      InstanceType: t2.micro
+      SecurityGroupIds:
+        - !Ref AllowSSH
+      UserData: !Base64 |
+        #!/bin/bash -ex
+        echo "It worked!" > /root/worked.txt
+      Tags:
+        - Key: Name
+          Value: SampleInstance2
+
+Outputs:
+  IPAddress1:
+    Description: IP Addresses of instance 1
+    Value: !GetAtt SampleInstance1.PublicIp
+  IPAddress2:
+    Description: IP Addresses of instance 2
+    Value: !GetAtt SampleInstance2.PublicIp
