@@ -1,9 +1,15 @@
+Parameters:
+  ImageID:
+    Description: Image ID
+    Type: AWS::EC2::Image::Id
+    Default: ami-0ebfd941bbafe70c6
+
 Resources:
   SampleInstance:
     Type: AWS::EC2::Instance
     Properties:
       KeyName: A4L
-      ImageId: ami-0ebfd941bbafe70c6
+      ImageId: !Ref ImageID
       InstanceType: t2.micro
       SecurityGroupIds:
         - !Ref AllowSSH
