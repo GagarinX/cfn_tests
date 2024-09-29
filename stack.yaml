@@ -5,6 +5,16 @@ Parameters:
     Description: Image ID
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
+  Environment:
+    Description: Environment tier
+    Type: String
+
+Mappings:
+  Environments:
+    stage:
+      instanceSize: t2.micro
+    prod:
+      instanceSize: t3.micro
 
 Resources:
   AllowSSH:
@@ -12,7 +22,6 @@ Resources:
     Properties:
       GroupName: allow-ssh
       GroupDescription: Allows SSH
-      # VpcId:
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -26,7 +35,7 @@ Resources:
         Properties:
           KeyName: A4L
           ImageId: !Ref ImageID
-          InstanceType: t2.micro
+          InstanceType: !FindInMap [Environments, !Ref Environment, instanceSize]
           SecurityGroupIds:
             - !Ref AllowSSH
           UserData: !Base64 |
