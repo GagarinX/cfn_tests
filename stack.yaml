@@ -5,10 +5,22 @@ Resources:
       KeyName: A4L
       ImageId: ami-0ebfd941bbafe70c6
       InstanceType: t2.micro
-      # SecurityGroupIds:
+      SecurityGroupIds:
+        - !Ref AllowSSH
       UserData: !Base64 |
         #!/bin/bash -ex
         # echo "It worked!" > /root/worked.txt
       Tags:
         - Key: Name
           Value: SampleInstance
+  AllowSSH:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: allow-ssh
+      GroupDescription: Allows SSH
+      # VpcId:
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 82.102.114.179/32
