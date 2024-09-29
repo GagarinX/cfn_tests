@@ -18,34 +18,23 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 82.102.114.179/32
-  SampleInstance1:
-    Type: AWS::EC2::Instance
-    Properties:
-      KeyName: A4L
-      ImageId: !Ref ImageID
-      InstanceType: t2.micro
-      SecurityGroupIds:
-        - !Ref AllowSSH
-      UserData: !Base64 |
-        #!/bin/bash -ex
-        echo "It worked!" > /root/worked.txt
-      Tags:
-        - Key: Name
-          Value: SampleInstance
-  SampleInstance2:
-    Type: AWS::EC2::Instance
-    Properties:
-      KeyName: A4L
-      ImageId: !Ref ImageID
-      InstanceType: t2.micro
-      SecurityGroupIds:
-        - !Ref AllowSSH
-      UserData: !Base64 |
-        #!/bin/bash -ex
-        echo "It worked!" > /root/worked.txt
-      Tags:
-        - Key: Name
-          Value: SampleInstance2
+  'Fn::ForEach::Instances':
+    - Identifier
+    - ["1", "2"]
+    - SampleInstance${Identifier}:
+        Type: AWS::EC2::Instance
+        Properties:
+          KeyName: A4L
+          ImageId: !Ref ImageID
+          InstanceType: t2.micro
+          SecurityGroupIds:
+            - !Ref AllowSSH
+          UserData: !Base64 |
+            #!/bin/bash -ex
+            echo "It worked!" > /root/worked.txt
+          Tags:
+            - Key: Name
+              Value: !Sub "SampleInstance${Identifier}"
 
 Outputs:
   'Fn::ForEach::IPAddresses':
