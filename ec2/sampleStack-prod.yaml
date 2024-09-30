@@ -1,4 +1,4 @@
-template-file-path: stack.yaml
+template-file-path: ec2/stack.yaml
 parameters:
   Environment: prod
 tags: {}
