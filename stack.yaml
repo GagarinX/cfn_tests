@@ -64,8 +64,11 @@ Resources:
               Value: !Sub "SampleInstance${Identifier}-${Environment}"
 
 Outputs:
+  IpAddress1:
+    Value: !GetAtt Instance1.PublicIp
   'Fn::ForEach::IPAddresses':
     - Identifier
-    - ["1", "2", "3"]
+    - ["2", "3"]
     - 'IPAddress${Identifier}':
+        Condition: CreateAdditionalInstances
         Value: !GetAtt [!Sub 'Instance${Identifier}', PublicIp]
