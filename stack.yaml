@@ -31,19 +31,19 @@ Resources:
           ToPort: 22
           CidrIp: 82.102.114.179/32
   Instance1:
-  Type: AWS::EC2::Instance
-  Properties:
-    KeyName: A4L
-    ImageId: !Ref ImageID
-    InstanceType: !FindInMap [Environments, !Ref Environment, instanceSize]
-    SecurityGroupIds:
-      - !Ref AllowSSH
-    UserData: !Base64 |
-      #!/bin/bash -ex
-      echo "It worked!" > /root/worked.txt
-    Tags:
-      - Key: Name
-        Value: !Sub "SampleInstance1-${Environment}"
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: A4L
+      ImageId: !Ref ImageID
+      InstanceType: !FindInMap [Environments, !Ref Environment, instanceSize]
+      SecurityGroupIds:
+        - !Ref AllowSSH
+      UserData: !Base64 |
+        #!/bin/bash -ex
+        echo "It worked!" > /root/worked.txt
+      Tags:
+        - Key: Name
+          Value: !Sub "SampleInstance1-${Environment}"
   'Fn::ForEach::AdditionalInstances':
     - Identifier
     - ["2", "3"]
