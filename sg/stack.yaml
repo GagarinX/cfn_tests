@@ -19,6 +19,6 @@ Resources:
 
 Outputs:
   AllowSshSGName:
-    Value: !Ref AllowSSH
+    Value: !GetAtt AllowSSH.GroupId
     Export: 
       Name: AllowSSHSecurityGroup
