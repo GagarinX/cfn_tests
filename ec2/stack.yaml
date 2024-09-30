@@ -13,23 +13,10 @@ Mappings:
   Environments:
     stage:
       instanceSize: t2.micro
-      secGroup: sg-03671d496c0855f89
     prod:
       instanceSize: t3.micro
-      secGroup: sg-06db931a08e2a02cf
 
 Resources:
-  # AllowSSH:
-  #   Type: AWS::EC2::SecurityGroup
-  #   DeletionPolicy: Retain
-  #   Properties:
-  #     GroupName: !Sub allow-ssh-${Environment}
-  #     GroupDescription: Allows SSH
-  #     SecurityGroupIngress:
-  #       - IpProtocol: tcp
-  #         FromPort: 22
-  #         ToPort: 22
-  #         CidrIp: 82.102.114.179/32
   Instance:
     Type: AWS::EC2::Instance
     Properties:
@@ -37,7 +24,7 @@ Resources:
       ImageId: !Ref ImageID
       InstanceType: !FindInMap [Environments, !Ref Environment, instanceSize]
       SecurityGroupIds:
-        - !FindInMap [Environments, !Ref Environment, secGroup]
+        - !ImportValue AllowSSHSecurityGroup
       UserData: !Base64 |
         #!/bin/bash -ex
         echo "It worked!" > /root/worked.txt
