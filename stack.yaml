@@ -67,10 +67,10 @@ Outputs:
   IpAddress1:
     Value: !GetAtt Instance1.PublicIp
   IpAddress2:
-    Value: !GetAtt Instance1.PublicIp
+    Value: !GetAtt Instance2.PublicIp
     Condition: CreateAdditionalInstances
   IpAddress3:
-    Value: !GetAtt Instance1.PublicIp
+    Value: !GetAtt Instance3.PublicIp
     Condition: CreateAdditionalInstances
   # 'Fn::ForEach::IPAddresses':
   #   - Identifier
