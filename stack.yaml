@@ -16,9 +16,6 @@ Mappings:
     prod:
       instanceSize: t3.micro
 
-Conditions:
-  CreateAdditionalInstances: !Equals [!Ref Environment, prod]
-
 Resources:
   AllowSSH:
     Type: AWS::EC2::SecurityGroup
@@ -30,7 +27,7 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 82.102.114.179/32
-  Instance1:
+  Instance:
     Type: AWS::EC2::Instance
     Properties:
       KeyName: A4L
@@ -43,38 +40,9 @@ Resources:
         echo "It worked!" > /root/worked.txt
       Tags:
         - Key: Name
-          Value: !Sub "SampleInstance1-${Environment}"
-  'Fn::ForEach::AdditionalInstances':
-    - Identifier
-    - ["2", "3"]
-    - Instance${Identifier}:
-        Type: AWS::EC2::Instance
-        Condition: CreateAdditionalInstances
-        Properties:
-          KeyName: A4L
-          ImageId: !Ref ImageID
-          InstanceType: !FindInMap [Environments, !Ref Environment, instanceSize]
-          SecurityGroupIds:
-            - !Ref AllowSSH
-          UserData: !Base64 |
-            #!/bin/bash -ex
-            echo "It worked!" > /root/worked.txt
-          Tags:
-            - Key: Name
-              Value: !Sub "SampleInstance${Identifier}-${Environment}"
+          Value: !Sub "SampleInstance-${Environment}"
 
 Outputs:
-  IpAddress1:
-    Value: !GetAtt Instance1.PublicIp
-  IpAddress2:
-    Value: !GetAtt Instance2.PublicIp
-    Condition: CreateAdditionalInstances
-  IpAddress3:
-    Value: !GetAtt Instance3.PublicIp
-    Condition: CreateAdditionalInstances
-  # 'Fn::ForEach::IPAddresses':
-  #   - Identifier
-  #   - ["2", "3"]
-  #   - 'IPAddress${Identifier}':
-  #       Condition: CreateAdditionalInstances
-  #       Value: !GetAtt [!Sub 'Instance${Identifier}', PublicIp]
+  IpAddress:
+    Value: !GetAtt Instance.PublicIp
+
