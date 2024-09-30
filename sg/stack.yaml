@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  AllowedIP:
+    Description: Allowed IP for SSH
+    Type: String
+    Default: 82.102.114.179/32
+
+Resources:
+  AllowSSH:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: allow-ssh
+      GroupDescription: Allows SSH
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowedIP
