@@ -66,9 +66,15 @@ Resources:
 Outputs:
   IpAddress1:
     Value: !GetAtt Instance1.PublicIp
-  'Fn::ForEach::IPAddresses':
-    - Identifier
-    - ["2", "3"]
-    - 'IPAddress${Identifier}':
-        Condition: CreateAdditionalInstances
-        Value: !GetAtt [!Sub 'Instance${Identifier}', PublicIp]
+  IpAddress2:
+    Value: !GetAtt Instance1.PublicIp
+    Condition: CreateAdditionalInstances
+  IpAddress3:
+    Value: !GetAtt Instance1.PublicIp
+    Condition: CreateAdditionalInstances
+  # 'Fn::ForEach::IPAddresses':
+  #   - Identifier
+  #   - ["2", "3"]
+  #   - 'IPAddress${Identifier}':
+  #       Condition: CreateAdditionalInstances
+  #       Value: !GetAtt [!Sub 'Instance${Identifier}', PublicIp]
