@@ -19,6 +19,7 @@ Mappings:
 Resources:
   AllowSSH:
     Type: AWS::EC2::SecurityGroup
+    DeletionPolicy: Retain
     Properties:
       GroupName: !Sub allow-ssh-${Environment}
       GroupDescription: Allows SSH
